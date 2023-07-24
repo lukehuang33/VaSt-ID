@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VaSt-ID - Variable Star Classifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label.upload-btn {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        label.upload-btn:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="submit"] {
+            background-color: #28A745;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1E7E34;
+        }
+
+        mark {
+            background-color: #FFC107;
+            padding: 5px;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            margin-top: 20px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to <span style="color: #e84c3e;">VaSt-ID</span>, the Variable Star Classifier!</h1>
+
+    <p>In order to use this classifier, you must import a file with three columns of values in this order: date, magnitude, error. The date must be in Julian Days. The three columns must be separated by a single space, and no non-numbers should be included.</p>
+
+    <p>Example input:<br>
+        5346.92962 16.780 0.009<br>
+        5347.91038 16.784 0.009<br>
+        5358.90048 16.820 0.009<br>
+        5364.91330 16.745 0.008<br>
+        5376.93533 16.676 0.008<br>
+        5378.93673 16.740 0.008<br>
+        5380.90994 16.811 0.009<br>
+        5381.91905 16.730 0.008
+        <br><br>
+        where the first column is the date, the second column is the magnitude, and the third column is the error.
+    </p>
+
+    <form method="post" enctype="multipart/form-data">
+        <label class="upload-btn" for="file">Choose File</label>
+        <input id="file" name="file" type="file">
+        <input type="submit" value="Upload">
+    </form>
+
+    <p>{{error_message}}</p>
+
+    {% if show %}
+        <h3><mark>{{star_class}}</mark></h3>
+        <p>{{star_distance}}</p>
+        <p><a href={{star_link}}>Click here to learn more about your variable star!</a></p>
+    {% endif %}
+
+    {% if plot_image %}
+        <h3>Light Curve Plot:</h3>
+        <img src="data:image/png;base64, {{plot_image}}" alt="Light Curve Plot">
+    {% endif %}
+</body>
+</html>
